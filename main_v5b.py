@@ -1,6 +1,6 @@
 # Projekt rovnica na výpočet koreňa lineárnej rovnice
 # Ošetrenie číselného vstupu nekonečným cyklom vo vnutri funkcie s parametrami min a max cislo a nula (ano/nie)
-def getNumber(    popis: str = "Zadaj číslo:",najmenej: float = -1000.0,najviac: float = 1000.0, nulaPovolena: bool = True) -> float:
+def getNumber(popis: str = "Zadaj číslo:",najmenej: float = -100.0,najviac: float = 100.0, nulaPovolena: bool = True) -> float:
     while True:
         try:
             cislo: float = float(input(f"{popis} ∊ <{najmenej};{najviac}> nula je {'povolená' if nulaPovolena==True else 'zakázaná'}"+ ":"))
