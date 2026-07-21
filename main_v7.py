@@ -54,7 +54,7 @@ class Rovnica:
                 return cislo
 
     @staticmethod
-    def generujKoeficient(najmensi: int = -100, najvacsi: int = 100) -> float:
+    def generujKoeficient(najmensi: int = -10, najvacsi: int = 10) -> float:
         """Vygeneruje nahodné číslo z daného rozsahu
         Parametre:
             najmensi(int): minimalna generovana hodnota
@@ -64,6 +64,19 @@ class Rovnica:
         """
         return float(randint(najmensi, najvacsi))
 
+    @classmethod
+    def generujRovnice(cls, pocet: int) -> list:
+        """Vygeneruje zadany pocet linearnych rovnic
+        Parametre:
+            pocet(int):kolko rovnic sa vygeneruje
+        Navratova hodnota:
+            list:zoznam vygenerovanych rovnic
+        """
+        rovnice = []
+        for _ in range(pocet):
+            rovnice.append(cls(generuj=True))
+        return rovnice
+    
     def __init__(
         self,
         koefA: float | None = None,
@@ -80,12 +93,12 @@ class Rovnica:
         """
         if not generuj:
             self.a = (
-                self.getNumber("Zadaj koeficient a:", -100, 100, False)
+                self.getNumber("Zadaj koeficient a:", -10, 10, False)
                 if koefA is None
                 else koefA
             )
             self.b = (
-                self.getNumber("Zadaj koeficient b:", -100, 100, True)
+                self.getNumber("Zadaj koeficient b:", -10, 10, True)
                 if koefB is None
                 else koefB
             )
@@ -102,7 +115,7 @@ class Rovnica:
             reťazec popisujúci lineárnu rovnicu
         """
         znamienko = "+" if self.b >= 0 else "-"
-        return f"{self.a}x {znamienko} {abs(self.b)} = 0"
+        return f"{self.a:>6}x {znamienko} {abs(self.b):>5} = 0"
 
         #     def dajRiesenie1(self) -> float | None:
         #         """Vypočíta riešenie lineárnej rovnice
@@ -153,34 +166,43 @@ class Rovnica:
         #             print(f"Rovnica {self} má koreň:{vyries:.2f}")
 
     def dajRiesenie(self) -> tuple[str, float | None]:
+        """Vracia nticu s informáciou o počte koreňov a samotný koreň
+        Parametre:
+        Návratová hodnota:
+            tuple(str,float|None):prvá položka obsahuje text a druhá koreň alebo None
+
+        """
         if self.a != 0:
-            return  ("koren", -self.b / self.a)
+            return ("koren", -self.b / self.a)
         else:
             if self.b == 0.0:
-                return  ("vela", None )
+                return ("vela", None)
             else:
-                return  ("ziadne", None )
+                return ("ziadne", None)
 
     def vypisRiesenie(self) -> None:
+        """Vypíše informáciu o počte koreňov a hodnotu koreňa"""
         match self.dajRiesenie():
-            case ("koren",x):
-                print(f"Rovnica {self} má koreň:{x:.2f}")
-            case ("vela",_):
+            case ("koren", x):
+                print(f"Rovnica {self} má koreň:{x:5.2f}")
+            case ("vela", _):
                 print(f"Rovnica {self} má veľa riešení")
-            case ("ziadne",_):
+            case ("ziadne", _):
                 print(f"Rovnica {self} nemá žiadne riešenie")
 
 
 if (
     __name__ == "__main__"
 ):  # aby sa nespustilo pri importe, ale len pri priamom spustení
-    Prva = Rovnica(10, 27)
-    Druha = Rovnica(10)
-    Tretia = Rovnica()
-    Stvrta = Rovnica(generuj=True)
-    Piata = Rovnica(4, generuj=True)
-    Prva.vypisRiesenie()
-    Druha.vypisRiesenie()
-    Tretia.vypisRiesenie()
-    Stvrta.vypisRiesenie()
-    Piata.vypisRiesenie()
+    #     Prva = Rovnica(10, 27)
+    #     Druha = Rovnica(10)
+    #     Tretia = Rovnica()
+    #     Stvrta = Rovnica(generuj=True)
+    #     Piata = Rovnica(4, generuj=True)
+    #     Prva.vypisRiesenie()
+    #     Druha.vypisRiesenie()
+    #     Tretia.vypisRiesenie()
+    #     Stvrta.vypisRiesenie()
+    #     Piata.vypisRiesenie()
+    for i in Rovnica.generujRovnice(10):
+        i.vypisRiesenie()
