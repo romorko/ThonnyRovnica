@@ -191,18 +191,6 @@ class Rovnica:
                 print(f"Rovnica {self} nemá žiadne riešenie")
 
 
-if (
-    __name__ == "__main__"
-):  # aby sa nespustilo pri importe, ale len pri priamom spustení
-    #     Prva = Rovnica(10, 27)
-    #     Druha = Rovnica(10)
-    #     Tretia = Rovnica()
-    #     Stvrta = Rovnica(generuj=True)
-    #     Piata = Rovnica(4, generuj=True)
-    #     Prva.vypisRiesenie()
-    #     Druha.vypisRiesenie()
-    #     Tretia.vypisRiesenie()
-    #     Stvrta.vypisRiesenie()
-    #     Piata.vypisRiesenie()
+if (__name__ == "__main__"):  # aby sa nespustilo pri importe, ale len pri priamom spustení
     for i in Rovnica.generujRovnice(10):
         i.vypisRiesenie()
